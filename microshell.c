@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 15:12:52 by tmatis            #+#    #+#             */
-/*   Updated: 2021/06/05 16:49:05 by tmatis           ###   ########.fr       */
+/*   Updated: 2021/06/05 18:25:48 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,14 @@ int	exec(t_list *pipe_list, char **envp)
 			previous = pipe_list->previous->data;
 			if (dup2(previous->tube[0], STDIN_FILENO) < 0)
 				exit(1);
+			close(previous->tube[0]);
 		}
 		if (pipe_list->next)
 		{
 			close(command->tube[0]);
 			if (dup2(command->tube[1], STDOUT_FILENO) < 0)
 				exit(1);
+			close(command->tube[1]);
 		}
 		ret = builtin(command);
 		if (ret)
