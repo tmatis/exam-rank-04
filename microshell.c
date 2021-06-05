@@ -6,7 +6,7 @@
 /*   By: tmatis <tmatis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 15:12:52 by tmatis            #+#    #+#             */
-/*   Updated: 2021/06/05 18:25:48 by tmatis           ###   ########.fr       */
+/*   Updated: 2021/06/05 18:42:46 by tmatis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include <string.h>
 #include <sys/wait.h>
 
+#ifdef TEST_SH
+# define TEST		1
+#else
+# define TEST		0
+#endif
 
 typedef struct s_command
 {
@@ -269,6 +274,8 @@ int	main(int argc, char **argv, char **envp)
 			if (shared_index < argc && (!strcmp(argv[shared_index], "|") || !strcmp(argv[shared_index], ";")))
 				shared_index++;
 		}
+		if (TEST)
+			while (1);
 	}
 	return (ret);
 }
